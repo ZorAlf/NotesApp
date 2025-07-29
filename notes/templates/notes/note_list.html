@@ -1,0 +1,32 @@
+{% extends 'notes/base.html' %}
+
+{% block title %}Notes List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Notes List</h1>
+    <a href="{% url 'note_create' %}" class="btn btn-primary">+ Add New Note</a>
+</div>
+
+<div class="row">
+    {% for item in notes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"> <b>{{ item.Title }}</b></h5>
+                <p class="card-text">{{ item.Content|truncatewords:20 }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="{% url 'note_edit' item.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="{% url 'note_delete' item.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                </div
+                <small class="text-muted">{{ item.Created_at|date:"H:i d M Y " }}</small>
+            </div>
+            </div>
+    </div>
+    {% empty %}
+    <p>No notes have been added yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}
